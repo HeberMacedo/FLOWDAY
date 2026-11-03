@@ -1,0 +1,52 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: flowday-mysql
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci"]
+    environment:
+      MYSQL_DATABASE: flowday
+      MYSQL_USER: ${MYSQL_USER:-flowday}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Defina MYSQL_PASSWORD no arquivo .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Defina MYSQL_ROOT_PASSWORD no arquivo .env}
+      TZ: America/Sao_Paulo
+    ports:
+      - "3307:3306"
+    volumes:
+      - flowday-dados:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  # Servidor SMTP de teste: os e-mails de recuperação aparecem em http://localhost:8025
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: flowday-mailpit
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+  api:
+    build:
+      context: .
+      target: final
+    container_name: flowday-api
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__FlowDay: "Server=mysql;Port=3306;Database=flowday;User=${MYSQL_USER:-flowday};Password=${MYSQL_PASSWORD};SslMode=Preferred;AllowPublicKeyRetrieval=True"
+      Jwt__Chave: ${JWT_CHAVE:?Defina JWT_CHAVE no arquivo .env}
+      Email__Host: mailpit
+      Email__Porta: "1025"
+      Aplicacao__UrlFrontend: ${URL_FRONTEND:-http://localhost:5500}
+      TZ: America/Sao_Paulo
+    ports:
+      - "8080:8080"
+
+volumes:
+  flowday-dados:
