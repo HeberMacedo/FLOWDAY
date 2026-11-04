@@ -151,7 +151,7 @@ public class Tarefa
     }
 
     private ItemChecklist ObterItem(Guid itemId) =>
-        _itens.FirstOrDefault(i => i.Id == itemId) ?? throw new NaoEncontradoException("Item de checklist");
+        _itens.FirstOrDefault(i => i.Id == itemId) ?? throw new NaoEncontradoException("Item de checklist não encontrado.");
 
     /// <summary>RN12: itens de tarefa concluída não podem ser alterados.</summary>
     private void GarantirQueChecklistPodeSerAlterado()

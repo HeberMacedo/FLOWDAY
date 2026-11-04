@@ -43,10 +43,20 @@ services:
       Jwt__Chave: ${JWT_CHAVE:?Defina JWT_CHAVE no arquivo .env}
       Email__Host: mailpit
       Email__Porta: "1025"
-      Aplicacao__UrlFrontend: ${URL_FRONTEND:-http://localhost:5500}
+      Aplicacao__UrlFrontend: ${URL_FRONTEND:-http://localhost:8081}
       TZ: America/Sao_Paulo
     ports:
       - "8080:8080"
+
+  # Front-end (HTML, CSS e JavaScript) em http://localhost:8081
+  web:
+    build:
+      context: ./frontend
+    container_name: flowday-web
+    depends_on:
+      - api
+    ports:
+      - "8081:80"
 
 volumes:
   flowday-dados:

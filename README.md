@@ -1,11 +1,23 @@
-# FlowDay API
+# FlowDay
 
-API REST do **FlowDay**, plataforma de checklist e produtividade desenvolvida para a disciplina de Back-end do curso de Engenharia de Software do CEUB.
+Plataforma de checklist e produtividade desenvolvida para a disciplina de Back-end do curso de Engenharia de Software do CEUB: **API REST em C#/.NET 8**, **front-end web responsivo**, **MySQL em Docker** e **29 testes automatizados**.
+
+![Painel do FlowDay](docs/imagens/tela-04-painel.jpg)
 
 O FlowDay reúne em um só lugar as demandas pessoais, profissionais, acadêmicas e de lazer do usuário. As tarefas são organizadas por áreas, têm prazo, prioridade por cor e rótulo e checklist, e podem ser vistas em lista, quadro Kanban e calendário.
 
 **Equipe:** Marco Antonio de Melo Peixoto e Heber Americo Macedo
 **Professor:** Daniel Lim-Apo
+
+## Documentação
+
+| Documento | Conteúdo |
+|---|---|
+| [BRD](docs/BRD_FlowDay.pdf) | Documento de Requisitos de Negócio: problema, objetivos, stakeholders, RB01 a RB13, regras RN01 a RN23 e fluxos de processo |
+| [ERS](docs/ERS_FlowDay.pdf) | Especificação de Requisitos de Software: RF01 a RF43, RNF01 a RNF28, casos de uso e critérios de aceitação |
+| [Planejamento](docs/planejamento.md) | Metodologia, cronograma, gráfico de Gantt, divisão de tarefas, backlog e riscos |
+| [Diagramas](docs/diagramas.md) | Casos de uso, classes, entidade-relacionamento, sequência, estados, arquitetura e implantação |
+| [Documento de evidências](docs/Evidencias_FlowDay.docx) | Solução, arquitetura, planejamento e execução, com prints de todas as telas, do Swagger, dos testes e do banco |
 
 ## Tecnologias
 
@@ -18,6 +30,7 @@ O FlowDay reúne em um só lugar as demandas pessoais, profissionais, acadêmica
 | Senhas | BCrypt (hash com salt) |
 | Documentação | Swagger / OpenAPI (Swashbuckle) |
 | Testes | xUnit |
+| Front-end | HTML, CSS e JavaScript (módulos ES), sem build, servido por nginx em container |
 | E-mail em desenvolvimento | Mailpit (servidor SMTP de teste em container) |
 
 ## Arquitetura
@@ -25,6 +38,8 @@ O FlowDay reúne em um só lugar as demandas pessoais, profissionais, acadêmica
 O projeto segue a arquitetura limpa, com as dependências apontando sempre para o domínio:
 
 ```
+frontend (navegador) ── HTTP/JSON + JWT ──►  FlowDay.Api
+
 FlowDay.Api  ──►  FlowDay.Infrastructure  ──►  FlowDay.Application  ──►  FlowDay.Domain
    (HTTP)            (EF Core, MySQL,             (casos de uso,             (entidades e
                       BCrypt, SMTP)                DTOs, interfaces)          regras de negócio)
@@ -50,6 +65,8 @@ FlowDay/
 │   └── FlowDay.Api/             Controllers, segurança e configuração
 ├── tests/
 │   └── FlowDay.Tests/           Testes automatizados (xUnit)
+├── frontend/                    Telas em HTML, CSS e JavaScript (nginx)
+├── docs/                        BRD, ERS, planejamento, diagramas e evidências
 ├── Dockerfile
 ├── docker-compose.yml
 └── .env.example
@@ -70,7 +87,7 @@ FlowDay/
 
    A chave do JWT precisa ter pelo menos 32 caracteres. Para gerar uma: `openssl rand -base64 48`.
 
-2. Suba o banco, o servidor de e-mail e a API:
+2. Suba o banco, o servidor de e-mail, a API e o front-end:
 
    ```bash
    docker compose up -d --build
@@ -80,6 +97,7 @@ FlowDay/
 
    | Serviço | Endereço |
    |---|---|
+   | **Aplicação (front-end)** | http://localhost:8081 |
    | Swagger da API | http://localhost:8080/swagger |
    | Caixa de e-mails de teste (Mailpit) | http://localhost:8025 |
    | MySQL (para clientes como DBeaver ou Workbench) | `localhost:3307` |
@@ -97,7 +115,19 @@ dotnet user-secrets set "Jwt:Chave" "UMA_CHAVE_COM_PELO_MENOS_32_CARACTERES" --p
 dotnet run --project src/FlowDay.Api
 ```
 
-A API fica em http://localhost:5080/swagger.
+A API fica em http://localhost:5080/swagger. Para usar o front-end com ela, suba o container `web` (`docker compose up -d web`) e troque o endereço em `frontend/js/config.js` para `http://localhost:5080`.
+
+## Como usar a aplicação
+
+1. Abra http://localhost:8081 e clique em **Criar conta**. O cadastro já entra no painel, com as áreas Pessoal, Trabalho, Estudos, Lazer e Geral.
+2. Use **Nova tarefa** (sempre visível) para criar tarefas com área, prazo, prioridade e checklist.
+3. Acompanhe as tarefas em **Lista**, **Kanban** (arraste os cartões ou use o menu ⋮) e **Calendário** (mês, semana e dia). A busca e os filtros valem nas três visualizações.
+4. Em **Esqueci minha senha**, o e-mail chega no Mailpit (http://localhost:8025) com o link de redefinição.
+5. A interface se adapta ao celular (barra de navegação inferior e botão flutuante).
+
+| Login | Kanban | Calendário |
+|---|---|---|
+| ![Login](docs/imagens/tela-01-login.jpg) | ![Kanban](docs/imagens/tela-07-kanban.jpg) | ![Calendário](docs/imagens/tela-10-calendario-mes.jpg) |
 
 ## Como testar a API pelo Swagger
 
@@ -110,7 +140,7 @@ Para testar a recuperação de senha, chame `POST /api/auth/recuperar-senha` e a
 
 ## Testes automatizados
 
-Os testes cobrem as regras de negócio do domínio e os serviços da aplicação, com repositórios em memória (sem banco). São mais de 25 casos, entre eles:
+Os testes cobrem as regras de negócio do domínio e os serviços da aplicação, com repositórios em memória (sem banco). São 29 casos, todos aprovados, entre eles:
 
 | Teste | Regra |
 |---|---|
@@ -177,7 +207,7 @@ Filtros de `GET /api/tarefas`, `kanban` e `calendario`: `busca`, `areaId`, `prio
 
 ## Tratamento de erros
 
-Todos os erros seguem o formato Problem Details (RFC 7807), com código HTTP adequado e sem detalhes internos:
+Todos os erros seguem o formato Problem Details (RFC 7807), com código HTTP adequado, mensagens em português e sem detalhes internos. Isso vale também para JSON malformado, parâmetros ausentes e valores em formato inválido:
 
 | Código | Quando ocorre |
 |---|---|
@@ -213,6 +243,7 @@ Exemplo:
 - Código de recuperação aleatório, de uso único, válido por 30 minutos e guardado só como hash SHA-256.
 - CORS restrito ao endereço do front-end, configurado em `Cors:Origens`.
 - O logout é feito pelo front-end, descartando o token, já que a API é stateless.
+- No front-end, todo texto do usuário é escapado antes de entrar no HTML (proteção contra XSS), e o nginx envia `X-Frame-Options`, `X-Content-Type-Options` e `Referrer-Policy: no-referrer` (o código de redefinição de senha, que vai na URL, não vaza para outros sites).
 
 ## Observações
 

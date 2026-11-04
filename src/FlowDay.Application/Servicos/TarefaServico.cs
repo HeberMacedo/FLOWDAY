@@ -137,7 +137,7 @@ public class TarefaServico
     }
 
     internal async Task<Tarefa> ObterDoUsuarioAsync(Guid id, CancellationToken ct) =>
-        await _tarefas.ObterAsync(id, _atual.Id, ct) ?? throw new NaoEncontradoException("Tarefa");
+        await _tarefas.ObterAsync(id, _atual.Id, ct) ?? throw new NaoEncontradoException("Tarefa não encontrada.");
 
     internal async Task<TarefaResponse> MontarAsync(Tarefa tarefa, CancellationToken ct)
     {

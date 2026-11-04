@@ -4,5 +4,5 @@ namespace FlowDay.Application;
 public class OpcoesAplicacao
 {
     /// <summary>Endereço do front-end, usado no link de recuperação de senha.</summary>
-    public string UrlFrontend { get; set; } = "http://localhost:5500";
+    public string UrlFrontend { get; set; } = "http://localhost:8081";
 }
