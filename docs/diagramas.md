@@ -64,7 +64,7 @@ As dependências apontam sempre para o domínio (arquitetura limpa). O domínio 
 
 ```mermaid
 flowchart TB
-    subgraph Cliente["Front-end (HTML, CSS e JavaScript)"]
+    subgraph Cliente["Front-end"]
         FE["Telas: login, cadastro, painel,<br/>lista, Kanban, calendário, áreas e perfil"]
     end
 

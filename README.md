@@ -4,6 +4,8 @@ Plataforma de checklist e produtividade desenvolvida para a disciplina de Back-e
 
 ![Painel do FlowDay](docs/imagens/tela-04-painel.jpg)
 
+**Página do projeto:** https://hebermacedo.github.io/FLOWDAY/
+
 O FlowDay reúne em um só lugar as demandas pessoais, profissionais, acadêmicas e de lazer do usuário. As tarefas são organizadas por áreas, têm prazo, prioridade por cor e rótulo e checklist, e podem ser vistas em lista, quadro Kanban e calendário.
 
 **Equipe:** Marco Antonio de Melo Peixoto e Heber Americo Macedo
