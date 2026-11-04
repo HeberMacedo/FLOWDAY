@@ -7,3 +7,5 @@
 TestResults/
 .env
 *.md
+frontend/
+docs/

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recuperar senha · FlowDay</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body data-pagina="recuperar">
+  <div class="acesso">
+    <aside class="acesso-marca" data-marca></aside>
+    <main class="acesso-form">
+      <div class="acesso-caixa">
+        <a class="logo" href="index.html" data-logo></a>
+
+        <div id="etapa-formulario">
+          <h2>Esqueceu a senha?</h2>
+          <p class="sub">Informe o e-mail da sua conta. Enviaremos um link para você criar uma nova senha.</p>
+          <form id="form-recuperar" novalidate>
+            <div data-alerta></div>
+            <div class="campo">
+              <label for="email">E-mail</label>
+              <input class="entrada" type="email" id="email" name="email" autocomplete="email" maxlength="254" placeholder="voce@email.com" autofocus>
+              <span class="erro-campo" data-erro="email"></span>
+            </div>
+            <button type="submit" class="btn btn-primario btn-bloco">Enviar link</button>
+          </form>
+        </div>
+
+        <div id="etapa-concluida" class="oculto">
+          <h2>Verifique seu e-mail</h2>
+          <p class="sub">Pedido recebido para <strong data-email></strong>.</p>
+          <div class="alerta alerta-sucesso" role="status">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span data-mensagem></span>
+          </div>
+          <p class="cartao-sub">O link vale por 30 minutos e só pode ser usado uma vez. Não chegou? Confira a caixa de spam ou peça outro link.</p>
+          <button type="button" class="btn btn-secundario btn-bloco" id="reenviar">Pedir outro link</button>
+        </div>
+
+        <p class="rodape"><a href="index.html">Voltar para o login</a></p>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="js/acesso.js"></script>
+</body>
+</html>

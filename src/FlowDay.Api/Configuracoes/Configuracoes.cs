@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.RateLimiting;
 using FlowDay.Api.Seguranca;
@@ -55,7 +56,11 @@ public static class LimiteRequisicoes
         return http.Response.WriteAsync(JsonSerializer.Serialize(problema, OpcoesJson), ct);
     }
 
-    private static readonly JsonSerializerOptions OpcoesJson = new(JsonSerializerDefaults.Web);
+    // Mantém acentos legíveis na resposta (ex.: "Não autorizado" em vez de "N\u00E3o autorizado").
+    private static readonly JsonSerializerOptions OpcoesJson = new(JsonSerializerDefaults.Web)
+    {
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+    };
 }
 
 public static class Autenticacao
