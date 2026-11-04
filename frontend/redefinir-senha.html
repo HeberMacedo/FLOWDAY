@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nova senha · FlowDay</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body data-pagina="redefinir">
+  <div class="acesso">
+    <aside class="acesso-marca" data-marca></aside>
+    <main class="acesso-form">
+      <div class="acesso-caixa">
+        <a class="logo" href="index.html" data-logo></a>
+        <h2>Criar nova senha</h2>
+        <p class="sub">Depois de salvar, as sessões abertas em outros aparelhos são encerradas.</p>
+
+        <div id="link-invalido" class="oculto">
+          <div class="alerta alerta-erro" role="alert">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+            <span>Link inválido ou incompleto. Abra o link exatamente como recebido no e-mail ou peça um novo.</span>
+          </div>
+          <a class="btn btn-primario btn-bloco" href="recuperar-senha.html">Pedir novo link</a>
+        </div>
+
+        <form id="form-redefinir" novalidate>
+          <div data-alerta></div>
+          <div class="campo">
+            <label for="novaSenha">Nova senha</label>
+            <div class="senha-wrap">
+              <input class="entrada" type="password" id="novaSenha" name="novaSenha" autocomplete="new-password" maxlength="128" autofocus>
+            </div>
+            <ul class="requisitos-senha" aria-label="Requisitos da senha">
+              <li data-regra="tamanho">8 ou mais caracteres</li>
+              <li data-regra="letra">uma letra</li>
+              <li data-regra="numero">um número</li>
+            </ul>
+            <span class="erro-campo" data-erro="novaSenha"></span>
+          </div>
+          <div class="campo">
+            <label for="confirmacaoSenha">Confirmar nova senha</label>
+            <div class="senha-wrap">
+              <input class="entrada" type="password" id="confirmacaoSenha" name="confirmacaoSenha" autocomplete="new-password" maxlength="128">
+            </div>
+            <span class="erro-campo" data-erro="confirmacaoSenha"></span>
+          </div>
+          <button type="submit" class="btn btn-primario btn-bloco">Salvar nova senha</button>
+        </form>
+
+        <p class="rodape"><a href="index.html">Voltar para o login</a></p>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="js/acesso.js"></script>
+</body>
+</html>

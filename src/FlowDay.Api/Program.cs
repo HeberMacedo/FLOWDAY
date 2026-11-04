@@ -5,7 +5,6 @@ using FlowDay.Api.Tratamento;
 using FlowDay.Application;
 using FlowDay.Application.Abstracoes;
 using FlowDay.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -21,24 +20,17 @@ builder.Services.AddSingleton<IServicoToken, ServicoTokenJwt>();
 builder.Services.AdicionarAutenticacaoJwt(config);
 builder.Services.AdicionarLimiteDeRequisicoes(config);
 
-builder.Services.AddControllers()
-    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
-    .ConfigureApiBehaviorOptions(o =>
+builder.Services.AddControllers(o =>
     {
-        // Erros de leitura do corpo ou dos parâmetros seguem o mesmo padrão das demais respostas (RNF20).
-        o.InvalidModelStateResponseFactory = contexto =>
-        {
-            var problema = new ValidationProblemDetails(contexto.ModelState)
-            {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Dados inválidos",
-                Detail = "Verifique os campos informados.",
-                Instance = contexto.HttpContext.Request.Path
-            };
-            problema.Extensions["traceId"] = contexto.HttpContext.TraceIdentifier;
-            return new BadRequestObjectResult(problema) { ContentTypes = { "application/problem+json" } };
-        };
-    });
+        // As regras de preenchimento ficam no domínio, com mensagens em português. Sem esta opção,
+        // o ASP.NET Core trataria toda string não anulável dos DTOs como [Required] e responderia
+        // em inglês antes de a requisição chegar às regras de negócio.
+        o.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+        ValidacaoDeEntrada.TraduzirMensagens(o.ModelBindingMessageProvider);
+    })
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
+    // Erros de leitura do corpo ou dos parâmetros seguem o mesmo padrão das demais respostas (RNF20).
+    .ConfigureApiBehaviorOptions(o => o.InvalidModelStateResponseFactory = ValidacaoDeEntrada.CriarResposta);
 
 builder.Services.AddProblemDetails(o =>
     o.CustomizeProblemDetails = contexto =>

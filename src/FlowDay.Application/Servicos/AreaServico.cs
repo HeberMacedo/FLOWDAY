@@ -82,5 +82,5 @@ public class AreaServico
     }
 
     private async Task<Area> ObterDoUsuarioAsync(Guid id, CancellationToken ct) =>
-        await _areas.ObterAsync(id, _atual.Id, ct) ?? throw new NaoEncontradoException("Área");
+        await _areas.ObterAsync(id, _atual.Id, ct) ?? throw new NaoEncontradoException("Área não encontrada.");
 }

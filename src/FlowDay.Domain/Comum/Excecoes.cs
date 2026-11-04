@@ -32,5 +32,5 @@ public sealed class RegraNegocioException : ExcecaoDominio
 /// <summary>Recurso inexistente ou que pertence a outro usuário (RN01).</summary>
 public sealed class NaoEncontradoException : ExcecaoDominio
 {
-    public NaoEncontradoException(string recurso) : base($"{recurso} não encontrado(a).") { }
+    public NaoEncontradoException(string mensagem) : base(mensagem) { }
 }

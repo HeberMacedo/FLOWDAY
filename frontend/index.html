@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar · FlowDay</title>
+  <meta name="description" content="FlowDay: plataforma de checklist e produtividade.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body data-pagina="login">
+  <div class="acesso">
+    <aside class="acesso-marca" data-marca></aside>
+    <main class="acesso-form">
+      <div class="acesso-caixa">
+        <a class="logo" href="index.html" data-logo></a>
+        <h2>Entrar</h2>
+        <p class="sub">Acesse sua conta para continuar organizando o seu dia.</p>
+
+        <form id="form-login" novalidate>
+          <div data-alerta></div>
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input class="entrada" type="email" id="email" name="email" autocomplete="email" maxlength="254" placeholder="voce@email.com" autofocus>
+            <span class="erro-campo" data-erro="email"></span>
+          </div>
+          <div class="campo">
+            <label for="senha">Senha</label>
+            <div class="senha-wrap">
+              <input class="entrada" type="password" id="senha" name="senha" autocomplete="current-password" maxlength="128" placeholder="Sua senha">
+            </div>
+            <span class="erro-campo" data-erro="senha"></span>
+          </div>
+          <div class="links">
+            <span></span>
+            <a href="recuperar-senha.html">Esqueci minha senha</a>
+          </div>
+          <button type="submit" class="btn btn-primario btn-bloco">Entrar</button>
+        </form>
+
+        <p class="rodape">Ainda não tem conta? <a href="cadastro.html">Criar conta</a></p>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="js/acesso.js"></script>
+</body>
+</html>

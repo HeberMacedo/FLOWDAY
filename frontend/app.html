@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FlowDay</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/estilo.css">
+  <script>
+    // Evita mostrar a área logada por um instante quando não há sessão (RF12).
+    try {
+      const s = JSON.parse(localStorage.getItem('flowday.sessao'));
+      if (!s || !s.token || new Date(s.expiraEm) <= new Date()) location.replace('index.html');
+    } catch { location.replace('index.html'); }
+  </script>
+</head>
+<body>
+  <div class="app">
+    <aside class="menu-lateral" aria-label="Menu principal">
+      <a class="logo" href="#/painel" data-logo></a>
+      <button type="button" class="btn btn-primario btn-bloco btn-nova" data-nova-tarefa></button>
+      <nav data-menu></nav>
+      <div class="menu-usuario">
+        <div class="avatar" data-avatar></div>
+        <div class="quem"><strong data-nome></strong><span data-email></span></div>
+        <button type="button" class="btn btn-fantasma btn-icone" data-sair title="Sair" aria-label="Sair"></button>
+      </div>
+    </aside>
+
+    <div class="principal">
+      <header class="topo">
+        <a class="logo" href="#/painel" data-logo></a>
+        <div>
+          <h1 data-titulo>Painel</h1>
+          <p class="sub" data-subtitulo></p>
+        </div>
+        <div class="acoes">
+          <button type="button" class="btn btn-primario btn-nova-topo" data-nova-tarefa></button>
+        </div>
+      </header>
+      <main class="conteudo" id="conteudo" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <nav class="nav-inferior" data-menu-inferior aria-label="Navegação"></nav>
+  <button type="button" class="fab" data-nova-tarefa-fab aria-label="Nova tarefa"></button>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

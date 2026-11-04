@@ -88,5 +88,5 @@ public class PerfilServico
     }
 
     private async Task<Usuario> ObterUsuarioAsync(CancellationToken ct) =>
-        await _usuarios.ObterPorIdAsync(_atual.Id, ct) ?? throw new NaoEncontradoException("Usuário");
+        await _usuarios.ObterPorIdAsync(_atual.Id, ct) ?? throw new NaoEncontradoException("Usuário não encontrado.");
 }

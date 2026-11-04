@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Criar conta · FlowDay</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body data-pagina="cadastro">
+  <div class="acesso">
+    <aside class="acesso-marca" data-marca></aside>
+    <main class="acesso-form">
+      <div class="acesso-caixa">
+        <a class="logo" href="index.html" data-logo></a>
+        <h2>Criar conta</h2>
+        <p class="sub">Leva menos de um minuto. Você já entra direto no painel.</p>
+
+        <form id="form-cadastro" novalidate>
+          <div data-alerta></div>
+          <div class="campo">
+            <label for="nome">Nome</label>
+            <input class="entrada" type="text" id="nome" name="nome" autocomplete="name" maxlength="100" placeholder="Como quer ser chamado(a)" autofocus>
+            <span class="erro-campo" data-erro="nome"></span>
+          </div>
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input class="entrada" type="email" id="email" name="email" autocomplete="email" maxlength="254" placeholder="voce@email.com">
+            <span class="erro-campo" data-erro="email"></span>
+          </div>
+          <div class="campo">
+            <label for="senha">Senha</label>
+            <div class="senha-wrap">
+              <input class="entrada" type="password" id="senha" name="senha" autocomplete="new-password" maxlength="128">
+            </div>
+            <ul class="requisitos-senha" aria-label="Requisitos da senha">
+              <li data-regra="tamanho">8 ou mais caracteres</li>
+              <li data-regra="letra">uma letra</li>
+              <li data-regra="numero">um número</li>
+            </ul>
+            <span class="erro-campo" data-erro="senha"></span>
+          </div>
+          <div class="campo">
+            <label for="confirmacaoSenha">Confirmar senha</label>
+            <div class="senha-wrap">
+              <input class="entrada" type="password" id="confirmacaoSenha" name="confirmacaoSenha" autocomplete="new-password" maxlength="128">
+            </div>
+            <span class="erro-campo" data-erro="confirmacaoSenha"></span>
+          </div>
+          <button type="submit" class="btn btn-primario btn-bloco">Criar conta</button>
+        </form>
+
+        <p class="rodape">Já tem conta? <a href="index.html">Entrar</a></p>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="js/acesso.js"></script>
+</body>
+</html>
