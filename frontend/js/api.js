@@ -111,7 +111,9 @@ export async function requisitar(caminho, { metodo = 'GET', corpo, consulta, aut
     token = sessao.token;
   }
 
-  const { status, dados } = await chamarApi(metodo, caminho, { corpo, parametros, token });
+  const { status, dados } = MODO_DEMO
+    ? await responderNoNavegador(metodo, caminho, { corpo, consulta: parametros, token })
+    : await chamarApi(metodo, caminho, { corpo, parametros, token });
 
   if (status === 204) return null;
   if (status < 200 || status >= 300) {
