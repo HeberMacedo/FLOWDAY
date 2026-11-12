@@ -82,6 +82,20 @@ public class ServicosTestes
         Assert.False(string.IsNullOrEmpty(login.Token));
     }
 
+    [Fact(DisplayName = "RN06: recuperação propaga cancelamento durante o envio do e-mail")]
+    public async Task RecuperacaoDeSenha_CancelamentoNaoEhIgnorado()
+    {
+        var cenario = new Cenario();
+        var usuario = await cenario.CadastrarAsync();
+        using var cancelamento = new CancellationTokenSource();
+        cancelamento.Cancel();
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            cenario.Autenticacao().SolicitarRecuperacaoAsync(
+                new RecuperarSenhaRequest { Email = usuario.Email }, cancelamento.Token));
+        Assert.Empty(cenario.Email.Enviados);
+    }
+
     [Fact(DisplayName = "RN08: tarefa só com título fica com prioridade Média e área Geral")]
     public async Task CriarTarefa_SomenteComTitulo_UsaPadroes()
     {

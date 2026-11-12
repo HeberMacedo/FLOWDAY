@@ -121,6 +121,10 @@ public class AutenticacaoServico
                 $"<p><a href=\"{link}\">Clique aqui para criar uma nova senha</a>. O link vale por 30 minutos e só pode ser usado uma vez.</p>" +
                 "<p>Se você não fez esse pedido, ignore este e-mail.</p>", ct);
         }
+        catch (OperationCanceledException) when (ct.IsCancellationRequested)
+        {
+            throw;
+        }
         catch (Exception ex)
         {
             // Não registra o código nem o link (RNF11).

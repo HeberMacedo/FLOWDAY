@@ -34,6 +34,7 @@ public class EnviadorEmailFalso : IEnviadorEmail
 
     public Task EnviarAsync(string para, string assunto, string corpoHtml, CancellationToken ct = default)
     {
+        ct.ThrowIfCancellationRequested();
         Enviados.Add((para, assunto, corpoHtml));
         return Task.CompletedTask;
     }

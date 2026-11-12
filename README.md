@@ -1,10 +1,10 @@
 # FlowDay
 
-Plataforma de checklist e produtividade desenvolvida para a disciplina de Back-end do curso de Engenharia de Software do CEUB: **API REST em C#/.NET 8**, **front-end web responsivo**, **MySQL em Docker** e **29 testes automatizados**.
+Plataforma de checklist e produtividade desenvolvida para a disciplina de Back-end do curso de Engenharia de Software do CEUB: **API REST em C#/.NET 8**, **front-end web responsivo**, **MySQL em Docker** e **31 testes automatizados**.
 
 ![Painel do FlowDay](docs/imagens/tela-04-painel.jpg)
 
-**Demonstração online:** https://hebermacedo.github.io/FLOWDAY/ (modo demonstração: roda no navegador, sem servidor, com os dados salvos só no aparelho; use o botão *Entrar com conta de demonstração*). O sistema completo, com a API em C#/.NET e o MySQL, roda com Docker, como descrito abaixo.
+O FlowDay é uma aplicação web que usa a API em C#/.NET e o MySQL. Para executar todas as funcionalidades, siga as instruções do Docker Compose abaixo.
 
 O FlowDay reúne em um só lugar as demandas pessoais, profissionais, acadêmicas e de lazer do usuário. As tarefas são organizadas por áreas, têm prazo, prioridade por cor e rótulo e checklist, e podem ser vistas em lista, quadro Kanban e calendário.
 
@@ -142,7 +142,7 @@ Para testar a recuperação de senha, chame `POST /api/auth/recuperar-senha` e a
 
 ## Testes automatizados
 
-Os testes cobrem as regras de negócio do domínio e os serviços da aplicação, com repositórios em memória (sem banco). São 29 casos, todos aprovados, entre eles:
+Os testes cobrem as regras de negócio do domínio, os serviços da aplicação e o mapeamento relacional. São 31 casos, todos aprovados, entre eles:
 
 | Teste | Regra |
 |---|---|
@@ -156,6 +156,7 @@ Os testes cobrem as regras de negócio do domínio e os serviços da aplicação
 | Mensagem genérica e bloqueio após 5 falhas de login | RN04 |
 | Link de recuperação de uso único; pedido novo invalida o anterior | RN06 |
 | Tarefa de outro usuário é tratada como inexistente | RN01 |
+| Tarefa só pode usar uma área do mesmo usuário | RN01 |
 | Excluir área move as tarefas para a Geral | RN18 |
 | Cadastro cria as cinco áreas padrão; e-mail repetido é recusado | RF02, RN02 |
 

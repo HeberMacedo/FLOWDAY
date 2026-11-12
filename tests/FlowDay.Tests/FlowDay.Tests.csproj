@@ -17,5 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\FlowDay.Domain\FlowDay.Domain.csproj" />
     <ProjectReference Include="..\..\src\FlowDay.Application\FlowDay.Application.csproj" />
+    <ProjectReference Include="..\..\src\FlowDay.Infrastructure\FlowDay.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

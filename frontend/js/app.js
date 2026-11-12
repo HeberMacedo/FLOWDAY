@@ -1,7 +1,6 @@
 // Casca da aplicação autenticada: menu, rotas, sessão e abertura de tarefas.
 
 import { api, consumirAviso, definirAviso, irParaLogin, limparSessao, obterSessao } from './api.js';
-import { MODO_DEMO, URL_REPOSITORIO } from './config.js';
 import { estado, recarregarAreas } from './estado.js';
 import { erroCarregamento } from './componentes.js';
 import { abrirNovaTarefa, abrirTarefa } from './tarefa-modal.js';
@@ -69,14 +68,6 @@ function montarLayout() {
   document.querySelector('[data-sair]').addEventListener('click', sair);
 
   atualizarUsuario(estado.usuario);
-
-  if (MODO_DEMO) {
-    const faixa = document.createElement('div');
-    faixa.className = 'faixa-demo';
-    faixa.innerHTML = `${icone('info')}<span><strong>Modo demonstração:</strong> os dados ficam salvos só neste navegador.
-      O sistema completo usa a API em C#/.NET com MySQL (<a href="${URL_REPOSITORIO}#readme" target="_blank" rel="noopener">como rodar</a>).</span>`;
-    document.querySelector('.principal').prepend(faixa);
-  }
 }
 
 export function atualizarUsuario(usuario) {

@@ -34,6 +34,7 @@ public class AreaConfiguracao : IEntityTypeConfiguration<Area>
         b.Property(a => a.Nome).HasMaxLength(Area.NomeMax).IsRequired();
         b.Property(a => a.NomeNormalizado).HasMaxLength(Area.NomeMax).IsRequired();
         b.HasIndex(a => new { a.UsuarioId, a.NomeNormalizado }).IsUnique(); // RN16
+        b.HasAlternateKey(a => new { a.Id, a.UsuarioId });
         b.HasOne<Usuario>().WithMany().HasForeignKey(a => a.UsuarioId).OnDelete(DeleteBehavior.Cascade);
     }
 }
@@ -56,8 +57,12 @@ public class TarefaConfiguracao : IEntityTypeConfiguration<Tarefa>
         b.HasIndex(t => new { t.UsuarioId, t.Prazo });
 
         b.HasOne<Usuario>().WithMany().HasForeignKey(t => t.UsuarioId).OnDelete(DeleteBehavior.Cascade);
+        // A tarefa só pode apontar para uma área do mesmo usuário (RN01).
         // Restrict: as tarefas são movidas para a Geral antes de a área ser excluída (RN18).
-        b.HasOne<Area>().WithMany().HasForeignKey(t => t.AreaId).OnDelete(DeleteBehavior.Restrict);
+        b.HasOne<Area>().WithMany()
+            .HasForeignKey(t => new { t.AreaId, t.UsuarioId })
+            .HasPrincipalKey(a => new { a.Id, a.UsuarioId })
+            .OnDelete(DeleteBehavior.Restrict);
 
         b.HasMany(t => t.Itens).WithOne().HasForeignKey(i => i.TarefaId).OnDelete(DeleteBehavior.Cascade);
         b.Navigation(t => t.Itens).HasField("_itens").UsePropertyAccessMode(PropertyAccessMode.Field);
