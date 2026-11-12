@@ -4,7 +4,7 @@ Plataforma de checklist e produtividade desenvolvida para a disciplina de Back-e
 
 ![Painel do FlowDay](docs/imagens/tela-04-painel.jpg)
 
-O FlowDay é uma aplicação web que usa a API em C#/.NET e o MySQL. Para executar todas as funcionalidades, siga as instruções do Docker Compose abaixo.
+**Demonstração online:** https://hebermacedo.github.io/FLOWDAY/ (modo demonstração: roda no navegador, sem servidor, com os dados salvos só no aparelho; use o botão *Entrar com conta de demonstração*). O sistema completo, com a API em C#/.NET e o MySQL, roda com Docker, como descrito abaixo.
 
 O FlowDay reúne em um só lugar as demandas pessoais, profissionais, acadêmicas e de lazer do usuário. As tarefas são organizadas por áreas, têm prazo, prioridade por cor e rótulo e checklist, e podem ser vistas em lista, quadro Kanban e calendário.
 

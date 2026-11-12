@@ -527,3 +527,20 @@ body.com-modal { overflow: hidden; }
   .linha-campos { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .checklist .cabeca .progresso { width: 110px; }
 }
+
+/* ---------- Modo demonstração (GitHub Pages) ---------- */
+.aviso-demo {
+  margin: 0 0 24px; padding: 14px 16px; border-radius: var(--raio);
+  background: var(--primaria-clara); border: 1px solid #c7d2fe; color: var(--primaria-texto); font-size: 13.5px;
+}
+.aviso-demo strong { display: flex; align-items: center; gap: 8px; font-size: 14px; margin-bottom: 4px; }
+.aviso-demo strong svg { width: 18px; height: 18px; }
+.aviso-demo p { color: #4338ca; line-height: 1.5; }
+.aviso-demo .btn { margin-top: 12px; background: #fff; border-color: #a5b4fc; color: var(--primaria-texto); }
+.aviso-demo .btn:hover:not(:disabled) { background: #f5f7ff; }
+.faixa-demo {
+  display: flex; align-items: flex-start; gap: 8px; padding: 8px 28px;
+  background: var(--primaria-clara); border-bottom: 1px solid #c7d2fe; color: var(--primaria-texto); font-size: 13px;
+}
+.faixa-demo svg { width: 16px; height: 16px; flex: none; margin-top: 2px; }
+@media (max-width: 900px) { .faixa-demo { padding: 8px 16px; font-size: 12px; } }

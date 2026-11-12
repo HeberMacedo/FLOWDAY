@@ -2,7 +2,7 @@
 // Centraliza o token JWT, o tratamento das respostas de erro (Problem Details,
 // RFC 7807) e o redirecionamento ao login quando a sessão expira (RF12, RN05).
 
-import { API_URL } from './config.js';
+import { API_URL, MODO_DEMO } from './config.js';
 
 const CHAVE_SESSAO = 'flowday.sessao';
 const CHAVE_AVISO = 'flowday.aviso';
@@ -138,6 +138,14 @@ async function chamarApi(metodo, caminho, { corpo, parametros, token }) {
   const tipo = resposta.headers.get('content-type') || '';
   const dados = resposta.status !== 204 && tipo.includes('json') ? await resposta.json().catch(() => null) : null;
   return { status: resposta.status, dados };
+}
+
+/** Modo demonstração: o módulo só é carregado no GitHub Pages. */
+async function responderNoNavegador(metodo, caminho, opcoes) {
+  const { responderDemo } = await import('./demo.js');
+  // Copia o corpo como a rede faria, para a simulação não alterar objetos da tela.
+  const corpo = opcoes.corpo === undefined ? undefined : JSON.parse(JSON.stringify(opcoes.corpo));
+  return responderDemo(metodo, caminho, { ...opcoes, corpo });
 }
 
 /* ---------------- Rotas da API ---------------- */
