@@ -6,7 +6,7 @@ namespace FlowDay.Tests.Persistencia;
 
 public class RelacoesTestes
 {
-    [Fact]
+    [Fact(DisplayName = "RN01: tarefa só pode usar uma área do mesmo usuário (chave composta no banco)")]
     public void Tarefa_DeveReferenciarAreaDoMesmoUsuario()
     {
         var opcoes = new DbContextOptionsBuilder<FlowDayDbContext>()

@@ -24,7 +24,7 @@ O trabalho foi conduzido em ciclos curtos, inspirados no Scrum e acompanhados em
 | 5 | Revisão | Revisão cruzada do BRD e do ERS e alinhamento com a modelagem | BRD v1.1 e ERS v1.1 | 03/11/2026 | 03/11/2026 | Marco e Heber |
 | 6 | Infraestrutura | Solução .NET em camadas, Docker Compose, MySQL, EF Core, Mailpit | Ambiente executável | 02/11/2026 | 03/11/2026 | Heber |
 | 7 | Back-end | Domínio, serviços, repositórios, API REST, JWT, BCrypt, rate limiting, tratamento de erros, Swagger | API completa | 02/11/2026 | 03/11/2026 | Heber (API e segurança) e Marco (domínio e regras) |
-| 8 | Testes | Testes automatizados das regras de negócio (xUnit) | 29 testes aprovados | 03/11/2026 | 03/11/2026 | Marco |
+| 8 | Testes | Testes automatizados das regras de negócio (xUnit) | 31 testes aprovados | 03/11/2026 | 03/11/2026 | Marco |
 | 9 | Front-end | Telas de login, cadastro, recuperação de senha, painel, lista, Kanban, calendário, áreas e perfil | Interface responsiva | 03/11/2026 | 04/11/2026 | Marco (telas) e Heber (integração com a API) |
 | 10 | Documentação | README, diagramas, planejamento e documento de evidências | Documentação final | 03/11/2026 | 05/11/2026 | Marco e Heber |
 | 11 | Apresentação | Roteiro, ensaio e demonstração em sala | Apresentação à turma | Data definida pelo professor | | Marco e Heber |
@@ -46,10 +46,10 @@ gantt
     Infraestrutura e Docker   :done,    f6, 2026-11-02, 2d
     Back-end (API REST)       :done,    f7, 2026-11-02, 2d
     Testes automatizados      :done,    f8, 2026-11-03, 1d
-    Front-end                 :active,  f9, 2026-11-03, 2d
+    Front-end                 :done,    f9, 2026-11-03, 2d
 
     section Entrega
-    Documentação e evidências :active,  f10, 2026-11-03, 3d
+    Documentação e evidências :done,    f10, 2026-11-03, 3d
     Ensaio da apresentação    :         f11, 2026-11-05, 1d
 ```
 

@@ -155,6 +155,7 @@ Os testes cobrem as regras de negócio do domínio, os serviços da aplicação 
 | Limite de 50 itens e tamanho do texto | RN19 |
 | Mensagem genérica e bloqueio após 5 falhas de login | RN04 |
 | Link de recuperação de uso único; pedido novo invalida o anterior | RN06 |
+| Recuperação de senha respeita o cancelamento do pedido | RN06 |
 | Tarefa de outro usuário é tratada como inexistente | RN01 |
 | Tarefa só pode usar uma área do mesmo usuário | RN01 |
 | Excluir área move as tarefas para a Geral | RN18 |
