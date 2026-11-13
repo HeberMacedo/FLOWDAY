@@ -82,7 +82,7 @@ gantt
 | Busca, filtros combinados e painel | RF40 a RF43 | Concluído |
 | Segurança: BCrypt, JWT, rate limiting, CORS, isolamento por usuário | RNF03 a RNF11 | Concluído |
 | Tratamento de erros padronizado (Problem Details) | RNF20 | Concluído |
-| 29 testes automatizados | RNF24 | Concluído |
+| 31 testes automatizados | RNF24 | Concluído |
 | Docker Compose com MySQL, API, front-end e Mailpit | RNF25 | Concluído |
 | Swagger documentado | RNF26 | Concluído |
 | README e documentação | RNF27 | Concluído |
