@@ -1,0 +1,63 @@
+# Roteiro de apresentação — FlowDay
+
+**Foco:** back-end · **Duração sugerida:** 5 minutos
+
+## 1. Projeto e objetivo
+
+- **Conceito:** O FlowDay ajuda a organizar tarefas pessoais, com prazos, prioridades e listas de itens.
+- **Técnico:** É uma aplicação web com front-end em HTML, CSS e JavaScript, API REST em C#/.NET 8 e banco MySQL. O foco do projeto da disciplina é o back-end.
+- **Prática:** Abra a demonstração web para ver a interface. Para ver o sistema completo, suba os serviços com Docker Compose; endereços e passos estão no `README.md`.
+
+## 2. Requisitos e planejamento
+
+- **Conceito:** Os requisitos explicam o problema e o que o sistema deve fazer; o planejamento mostra como a equipe organizou o trabalho.
+- **Técnico:** O BRD documenta objetivos e regras de negócio; o ERS detalha requisitos funcionais e não funcionais. Eles orientaram o escopo e a implementação.
+- **Prática:** Consulte `docs/BRD_FlowDay.pdf`, `docs/ERS_FlowDay.pdf` e `docs/planejamento.md` para ver regras, requisitos, cronograma e divisão de tarefas.
+
+## 3. Diagramas e evidências
+
+- **Conceito:** Diagramas mostram visualmente as partes do sistema e como elas se relacionam; as evidências registram o que foi implementado.
+- **Técnico:** A documentação inclui casos de uso, arquitetura, implantação, classes, modelo entidade-relacionamento e sequências de operações.
+- **Prática:** Veja `docs/diagramas.md`, as imagens em `docs/imagens/` e `docs/Evidencias_FlowDay.docx`, que reúne capturas da interface, do Swagger, dos testes e do banco.
+
+## 4. Arquitetura do back-end
+
+- **Conceito:** O código é dividido por responsabilidade: a API recebe pedidos, a aplicação coordena ações, o domínio guarda regras e a infraestrutura conversa com banco e e-mail.
+- **Técnico:** `FlowDay.Api` contém controllers e configuração HTTP; `FlowDay.Application`, serviços, DTOs e interfaces; `FlowDay.Domain`, entidades e regras; `FlowDay.Infrastructure`, repositórios e integrações. As dependências apontam para o domínio, seguindo arquitetura limpa.
+- **Prática:** Explore `src/FlowDay.Api`, `src/FlowDay.Application`, `src/FlowDay.Domain` e `src/FlowDay.Infrastructure`; o desenho está em `docs/diagramas.md`. Acompanhe uma requisição de um controller até o serviço e o domínio.
+
+## 5. API REST, login e CRUD
+
+- **Conceito:** A API permite que a interface cadastre e consulte dados; CRUD significa criar, consultar, alterar e excluir. O login identifica o usuário e libera as operações protegidas.
+- **Técnico:** Os controllers expõem endpoints REST para autenticação, perfil, tarefas, checklist, áreas e painel. O Swagger/OpenAPI descreve rotas, parâmetros, respostas e autenticação Bearer.
+- **Prática:** Suba o sistema conforme o `README.md` (`docker compose up -d --build`) e abra `http://localhost:8080/swagger`. Demonstre cadastro ou login, autorize com o token e mostre operações de tarefas, checklist e áreas em `src/FlowDay.Api/Controllers/`.
+
+## 6. Banco de dados, ORM e Docker
+
+- **Conceito:** O MySQL guarda os dados; o Entity Framework Core (ORM) faz a ligação entre os objetos do código e as tabelas. Docker executa os serviços em containers.
+- **Técnico:** O projeto usa MySQL 8.4 e Entity Framework Core 8 com Pomelo. O `DbContext`, configurações e repositórios ficam na infraestrutura; o Compose também define API, front-end, Mailpit e volume persistente.
+- **Prática:** Veja os serviços no `docker-compose.yml` e o mapeamento em `src/FlowDay.Infrastructure/Persistencia/`. O diagrama de implantação está em `docs/diagramas.md`; os containers podem ser conferidos com `docker compose ps`.
+
+## 7. Segurança
+
+- **Conceito:** A senha não é guardada em texto legível; o JWT funciona como uma credencial temporária, e cada usuário só acessa os próprios dados.
+- **Técnico:** Senhas usam hash BCrypt; JWT expira em 60 minutos. Consultas são isoladas pelo usuário autenticado. Há limite de requisições nas rotas de autenticação e recuperação de senha por código de uso único.
+- **Prática:** Faça login no Swagger e use **Authorize** para acessar uma rota protegida. A implementação está em `AutenticacaoController`, `AutenticacaoServico` e `src/FlowDay.Api/Seguranca/`; o Mailpit em `http://localhost:8025` permite mostrar e-mails de recuperação.
+
+## 8. Regras de negócio e erros
+
+- **Conceito:** O servidor verifica se uma operação é permitida e responde com um erro compreensível quando não é.
+- **Técnico:** As regras são aplicadas no domínio; exceções são convertidas para respostas Problem Details, com códigos HTTP adequados, pelo tratamento da API.
+- **Prática:** Crie uma tarefa com item pendente e tente concluí-la pelo Swagger; a API deve recusar com HTTP `422`. O tratamento fica em `src/FlowDay.Api/Tratamento/`.
+
+## 9. Testes automatizados
+
+- **Conceito:** Testes executam verificações automaticamente para confirmar que regras importantes continuam funcionando após mudanças no código.
+- **Técnico:** A suíte xUnit cobre regras do domínio, serviços da aplicação e mapeamentos relacionais, incluindo login, tarefas, checklist e áreas.
+- **Prática:** Execute `docker build --target testes -t flowday-testes .`. A validação pelo Docker passou com **31 testes aprovados**, localizados em `tests/FlowDay.Tests/`.
+
+## 10. Entrega
+
+- **Conceito:** O repositório reúne o código, a documentação e as instruções para executar e conhecer o sistema.
+- **Técnico:** A entrega inclui código-fonte, documentação de requisitos e arquitetura, planejamento, diagramas, evidências e guia de execução.
+- **Prática:** Consulte o repositório GitHub `HeberMacedo/FLOWDAY`, o `README.md` e os documentos em `docs/`. Encerre reforçando que a interface web demonstra o sistema, mas a apresentação prioriza o back-end.
