@@ -35,6 +35,8 @@ builder.Services.AddControllers(o =>
 builder.Services.AddProblemDetails(o =>
     o.CustomizeProblemDetails = contexto =>
     {
+        // Respostas geradas pelo framework (rota inexistente, método errado) também saem em português.
+        MensagensDeStatus.Completar(contexto.ProblemDetails);
         contexto.ProblemDetails.Instance ??= contexto.HttpContext.Request.Path;
         contexto.ProblemDetails.Extensions["traceId"] = contexto.HttpContext.TraceIdentifier;
     });
