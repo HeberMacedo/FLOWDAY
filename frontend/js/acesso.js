@@ -1,7 +1,6 @@
 // Lógica das telas públicas: login, cadastro, recuperação e redefinição de senha (M1).
 
 import { api, consumirAviso, definirAviso, limparSessao, obterSessao, salvarSessao } from './api.js';
-import { MODO_DEMO, URL_REPOSITORIO } from './config.js';
 import {
   ativarVerSenha, comCarregamento, esc, icone, limparErros, logo, marcarErro, mostrarErros,
   validarEmail, validarSenha
@@ -12,7 +11,6 @@ const pagina = document.body.dataset.pagina;
 montarPainelDaMarca();
 ativarVerSenha();
 mostrarAvisoPendente();
-if (MODO_DEMO) mostrarAvisoDemonstracao();
 
 const iniciar = { login: iniciarLogin, cadastro: iniciarCadastro, recuperar: iniciarRecuperacao, redefinir: iniciarRedefinicao };
 iniciar[pagina]?.();
@@ -170,20 +168,6 @@ function iniciarRedefinicao() {
       }
     }
   });
-}
-
-/* ---------------- Modo demonstração (GitHub Pages) ---------------- */
-
-function mostrarAvisoDemonstracao() {
-  const caixa = document.querySelector('.acesso-caixa');
-  const aviso = document.createElement('div');
-  aviso.className = 'aviso-demo';
-  aviso.innerHTML = `
-    <strong>${icone('info')}Modo demonstração</strong>
-    <p>Esta versão online roda direto no navegador: os dados ficam salvos só neste aparelho.
-       O sistema completo usa a API em C#/.NET com MySQL, executada com Docker
-       (<a href="${URL_REPOSITORIO}#readme" target="_blank" rel="noopener">veja como rodar</a>).</p>`;
-  caixa.querySelector('.logo').after(aviso);
 }
 
 /* ---------------- Apoio ---------------- */
