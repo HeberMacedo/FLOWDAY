@@ -182,24 +182,8 @@ function mostrarAvisoDemonstracao() {
     <strong>${icone('info')}Modo demonstração</strong>
     <p>Esta versão online roda direto no navegador: os dados ficam salvos só neste aparelho.
        O sistema completo usa a API em C#/.NET com MySQL, executada com Docker
-       (<a href="${URL_REPOSITORIO}#readme" target="_blank" rel="noopener">veja como rodar</a>).</p>
-    ${pagina === 'login' ? `<button type="button" class="btn btn-secundario btn-bloco" data-entrar-demo>${icone('raio')}Entrar com conta de demonstração</button>` : ''}`;
+       (<a href="${URL_REPOSITORIO}#readme" target="_blank" rel="noopener">veja como rodar</a>).</p>`;
   caixa.querySelector('.logo').after(aviso);
-
-  aviso.querySelector('[data-entrar-demo]')?.addEventListener('click', async (e) => {
-    const botao = e.currentTarget;
-    const form = document.querySelector('#form-login');
-    try {
-      await comCarregamento(botao, async () => {
-        const { prepararContaDemonstracao } = await import('./demo.js');
-        const conta = await prepararContaDemonstracao();
-        salvarSessao(await api.auth.entrar({ email: conta.email, senha: conta.senha }));
-      });
-      window.location.replace('app.html');
-    } catch (erro) {
-      mostrarAlerta(form, 'erro', erro.message);
-    }
-  });
 }
 
 /* ---------------- Apoio ---------------- */

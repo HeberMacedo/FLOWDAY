@@ -11,8 +11,6 @@ const BLOQUEIO_MINUTOS = 15;
 const MAXIMO_ITENS = 50;
 const DIAS_MAXIMOS_CALENDARIO = 62;
 
-export const CONTA_DEMONSTRACAO = { nome: 'Maria Souza', email: 'demo@flowday.app', senha: 'demo1234' };
-
 const PRIORIDADES = {
   Baixa: { ordem: 1, rotulo: 'Baixa', cor: '#22C55E' },
   Media: { ordem: 2, rotulo: 'Média', cor: '#EAB308' },
@@ -61,7 +59,6 @@ const agoraISO = () => new Date().toISOString();
 const doisDigitos = (n) => String(n).padStart(2, '0');
 const paraISO = (d) => `${d.getFullYear()}-${doisDigitos(d.getMonth() + 1)}-${doisDigitos(d.getDate())}`;
 const hoje = () => paraISO(new Date());
-const somarDias = (iso, dias) => { const [a, m, d] = iso.split('-').map(Number); return paraISO(new Date(a, m - 1, d + dias)); };
 const texto = (v) => (typeof v === 'string' ? v.trim() : '');
 const normalizar = (v) => texto(v).toLowerCase();
 const dataValida = (v) => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(new Date(v).getTime());
@@ -609,49 +606,4 @@ export async function responderDemo(metodo, caminho, { corpo, consulta = {}, tok
     console.error(erro);
     return { status: 500, dados: { title: 'Erro interno', status: 500, detail: 'Ocorreu um erro inesperado. Tente novamente em instantes.' } };
   }
-}
-
-/* ---------------- Conta de demonstração ---------------- */
-
-/** Cria (uma única vez) a conta de demonstração com tarefas de exemplo relativas à data de hoje. */
-export async function prepararContaDemonstracao() {
-  const banco = carregar();
-  if (banco.usuarios.some((u) => u.emailNormalizado === CONTA_DEMONSTRACAO.email)) return CONTA_DEMONSTRACAO;
-
-  const usuario = criarUsuario(banco, { ...CONTA_DEMONSTRACAO, senhaHash: await hash(CONTA_DEMONSTRACAO.senha) });
-  const area = (nome) => banco.areas.find((a) => a.usuarioId === usuario.id && a.nome === nome)?.id;
-  const academia = { id: novoId(), usuarioId: usuario.id, nome: 'Academia', nomeNormalizado: 'academia', ehGeral: false };
-  banco.areas.push(academia);
-
-  const d = hoje();
-  const exemplos = [
-    ['Entregar projeto de Back-end', 'Estudos', 'Urgente', 2, 'EmAndamento', ['Revisar o README', 'Gerar o documento de evidências', 'Ensaiar a apresentação'], 1, 'API REST em .NET, front-end, testes e documento de evidências.'],
-    ['Estudar para a prova de Banco de Dados', 'Estudos', 'Alta', 7, 'AFazer', ['Revisar normalização', 'Exercícios de SQL', 'Resumo de índices', 'Simulado'], 3, 'Normalização, índices e transações.'],
-    ['Reunião de alinhamento da sprint', 'Trabalho', 'Media', 0, 'AFazer'],
-    ['Pagar a conta de luz', 'Pessoal', 'Alta', 0, 'AFazer'],
-    ['Enviar relatório semanal', 'Trabalho', 'Alta', 1, 'EmAndamento', ['Consolidar indicadores', 'Revisar com a equipe'], 1],
-    ['Comprar presente de aniversário', 'Pessoal', 'Media', 4, 'AFazer'],
-    ['Treino de pernas', 'Academia', 'Baixa', 0, 'Concluida'],
-    ['Ler 30 páginas de Clean Code', 'Estudos', 'Baixa', 3, 'AFazer'],
-    ['Organizar viagem de fim de ano', 'Lazer', 'Media', null, 'AFazer', ['Pesquisar passagens', 'Reservar hospedagem', 'Montar roteiro'], 0],
-    ['Atualizar currículo no LinkedIn', 'Trabalho', 'Baixa', null, 'Concluida'],
-    ['Marcar consulta no dentista', 'Pessoal', 'Urgente', 1, 'AFazer'],
-    ['Assistir à aula gravada de Arquitetura', 'Estudos', 'Media', 9, 'AFazer'],
-    ['Renovar matrícula da academia', 'Academia', 'Alta', -2, 'AFazer'],
-    ['Responder e-mail do orientador', 'Estudos', 'Urgente', -3, 'AFazer'],
-    ['Cortar o cabelo', 'Pessoal', 'Baixa', 12, 'AFazer']
-  ];
-
-  exemplos.forEach(([titulo, nomeArea, prioridade, dias, status, itens = [], feitos = 0, descricao = null], i) => {
-    const criadaEm = new Date(Date.now() - (exemplos.length - i) * 3600000).toISOString();
-    banco.tarefas.push({
-      id: novoId(), usuarioId: usuario.id, areaId: nomeArea === 'Academia' ? academia.id : area(nomeArea),
-      titulo, descricao, status, prioridade, prazo: dias === null ? null : somarDias(d, dias),
-      concluidaEm: status === 'Concluida' ? agoraISO() : null, criadaEm, atualizadaEm: criadaEm,
-      itens: itens.map((textoItem, ordem) => ({ id: novoId(), texto: textoItem, concluido: ordem < feitos || status === 'Concluida', ordem: ordem + 1 }))
-    });
-  });
-
-  salvar(banco);
-  return CONTA_DEMONSTRACAO;
 }
